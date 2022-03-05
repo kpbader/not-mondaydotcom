@@ -12,37 +12,33 @@ function enterTeam() {
         type: 'input',
         name: 'managerName', 
         message: 'Enter Manager Name',
-        validate: answer => {
-            if (answer === "") {
-                console.log('Please enter a valid name.');
-                return false;
-            }
-            return true;
+        validate: answer => answer ? true : "Please enter valid name."
         },
-    
+        {    
         type: 'number',
         name: 'managerId',
         message: 'Enter Manager ID',
         validate: answer => {
-            if (answer < 0) {
+            if (answer < 0 || NaN) {
                 console.log('Please enter a valid number.')
                 return false;
             }
             return true;
         },
-
+        },
+        {
         type: 'input',
         name: 'managerEmail',
-        message: 'Enter Manager Email',
-        validate: answer => {
+        message: 'Enter Manager Email'
+        // validate: answer => {
             // 
         },
-
+        {
         type: 'number',
         name: 'managerOfficeNumber',
         message: 'Enter Manager office number.',
         validate: answer => {
-            if (answer < 0) {
+            if (answer < 0 || NaN) {
                 console.log('Please enter a valid number.')
                 return false;
             }
@@ -56,3 +52,5 @@ function enterTeam() {
     })
 
 }
+
+enterTeam();
