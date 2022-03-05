@@ -116,17 +116,20 @@ function enterTeam() {
 
     ]).then(data => {
 
-        if (data.role === 'Manager') {
+        if (data.teamRole === 'Manager') {
             const manager = new Manager(data.managerName, data.managerId, data.managerEmail, data.managerOfficeNumber);
             teamArr.push(manager);
+            
         }
-        if (data.role === 'Engineer') {
+        if (data.teamRole === 'Engineer') {
             const engineer = new Engineer(data.engineerName, data.engineerID, data.engineerEmail, data.engineerGithub);
             teamArr.push(engineer);
+            
         }
-        if (data.role === 'Intern') {
+        if (data.teamRole === 'Intern') {
             const intern = new Intern(data.internName, data.internID, data.internEmail, data.internSchool);
             teamArr.push(intern);
+            console.log(intern);
         }
         if (data.newTeamMember === 'Yes') {
             return enterTeam()
