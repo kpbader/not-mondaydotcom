@@ -1,0 +1,64 @@
+.header-bar {
+    background-color: rgb(108, 203, 231);
+  
+}
+
+h1 {
+    font-family: copperplate;
+    text-align: center;
+    font-size: 50px;
+}
+
+h2 {
+    font-size: 40px;
+}
+
+h3 {
+    font-size: 25px;
+}
+
+#cards {
+    justify-content: center;
+}
+
+.card {
+    border: 2px solid silver;
+    border-radius: 5px;
+    margin: 20px;
+    width: 300px;
+    height: 400px;
+    box-shadow: 10px 10px 5px lightgray;
+}
+
+.card-body {
+    font-family: copperplate;
+    text-align: center;
+    
+}
+
+li {
+    font-size: 20px;
+   border: 1px solid black;
+}
+
+a {
+    font-size: 20px;
+}
+
+i {
+    font-size: 30px;
+    padding-bottom: 20px;
+}
+
+
+.fa-solid, .fa-image-user {
+    font-weight: 900;
+}
+
+.list-group-item {
+    border: 1px solid silver;
+    border-radius: 5px;
+}
+
+
+

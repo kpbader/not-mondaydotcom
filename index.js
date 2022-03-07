@@ -5,28 +5,25 @@ const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 
+//this looks into your current home direcetory (since index.js is being executed from the home directory) and commands the file to go to the dist folder...creates the absolute path for the html
+const absolutePath = path.resolve(__dirname, 'dist')
+//this joins the absolute path with any file that we are goingt o create called index.html
+const filePath = path.join(absolutePath, 'index.html');
+
+const renderHtml = require('./src/renderHTML.js')
 
 const teamArr = [];
 
 
-function enterTeam() {
+function managerStart() {
     inquirer.prompt([
         {
-            type: 'list',
-            name: 'teamRole',
-            message: 'What team role/member would you like to add?',
-            choices: ['Manager', 'Engineer', 'Intern']
-
-        },
-        {
-            when: (data) => data.teamRole === 'Manager',
             type: 'input',
             name: 'managerName',
             message: 'Enter Manager Name',
             // validate: answer => answer ? true : "Please enter valid name."
         },
         {
-            when: (data) => data.teamRole === 'Manager',
             type: 'number',
             name: 'managerId',
             message: 'Enter Manager ID',
@@ -39,7 +36,6 @@ function enterTeam() {
             // },
         },
         {
-            when: (data) => data.teamRole === 'Manager',
             type: 'input',
             name: 'managerEmail',
             message: 'Enter Manager Email'
@@ -47,7 +43,6 @@ function enterTeam() {
             // 
         },
         {
-            when: (data) => data.teamRole === 'Manager',
             type: 'number',
             name: 'managerOfficeNumber',
             message: 'Enter Manager office number.',
@@ -59,6 +54,24 @@ function enterTeam() {
             //     return true;
             // }
         },
+    ]).then(data => {
+        const manager = new Manager(data.managerName, data.managerId, data.managerEmail, data.managerOfficeNumber);
+        teamArr.push(manager);
+        enterTeam();
+    })
+}
+
+
+function enterTeam() {
+    inquirer.prompt([
+        {
+            type: 'list',
+            name: 'teamRole',
+            message: 'What team role/member would you like to add?',
+            choices: ['Engineer', 'Intern']
+
+        },
+        
         {
             when: (data) => data.teamRole === 'Engineer',
             type: 'input',
@@ -107,7 +120,7 @@ function enterTeam() {
             name: 'internSchool',
             message: 'What is the school of the intern?'
         },
-         {
+        {
             type: 'list',
             name: 'newTeamMember',
             message: 'Would you like to add another team member?',
@@ -116,28 +129,27 @@ function enterTeam() {
 
     ]).then(data => {
 
-        if (data.teamRole === 'Manager') {
-            const manager = new Manager(data.managerName, data.managerId, data.managerEmail, data.managerOfficeNumber);
-            teamArr.push(manager);
-            
-        }
         if (data.teamRole === 'Engineer') {
             const engineer = new Engineer(data.engineerName, data.engineerID, data.engineerEmail, data.engineerGithub);
             teamArr.push(engineer);
-            
+
         }
         if (data.teamRole === 'Intern') {
             const intern = new Intern(data.internName, data.internID, data.internEmail, data.internSchool);
             teamArr.push(intern);
-            console.log(intern);
         }
         if (data.newTeamMember === 'Yes') {
-            return enterTeam()
+            enterTeam()
         } else {
-            console.log(teamArr);
-            return teamArr;
+           buildHtml()
         }
     })
 
 }
-enterTeam();
+
+function buildHtml() {
+fs.writeFileSync(filePath, renderHtml(teamArr), 'utf-8')
+}
+
+
+managerStart()
